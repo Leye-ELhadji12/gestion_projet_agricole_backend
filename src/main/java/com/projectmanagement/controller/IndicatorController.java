@@ -31,7 +31,7 @@ public class IndicatorController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<IndicatorDTO> updateIndicatorOnProject(@RequestParam IndicatorDTO indicatorDTO){
+    public ResponseEntity<IndicatorDTO> updateIndicatorOnProject(@RequestBody IndicatorDTO indicatorDTO){
         return ResponseEntity.ok(indicatorService.updateIndicatorOnProject(indicatorDTO));
     }
 
@@ -40,8 +40,8 @@ public class IndicatorController {
         return ResponseEntity.ok(indicatorService.getIndicatorOnProjectById(indicatorId));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteIndicatorOnProject(@RequestParam Long indicatorId){
+    @DeleteMapping("/delete/{indicatorId}")
+    public ResponseEntity<Void> deleteIndicatorOnProject(@PathVariable Long indicatorId){
         indicatorService.deleteIndicatorOnProject(indicatorId);
         return ResponseEntity.noContent().build();
     }
