@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: management
+  datasource:
+    url: jdbc:postgresql://localhost:5432/project_management
+    username: postgres
+    password: leye
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 102400000MB
+      max-request-size: 102400000MB
+#  app:
+#    jwtSecret: be26280a3aceb47c5caacde9597ff4c1a888018f23879d19ae6e476ca63ec386
+#    jwtExpirationMs: 86400000
+  mail:
+    host: localhost
+    port: 512
+server:
+  port: 8080
