@@ -30,7 +30,7 @@ public class IndicatorController {
                 .body(indicatorService.saveIndicatorOnProject(projectId,indicatorDTO));
     }
 
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseEntity<IndicatorDTO> updateIndicatorOnProject(@RequestBody IndicatorDTO indicatorDTO){
         return ResponseEntity.ok(indicatorService.updateIndicatorOnProject(indicatorDTO));
     }

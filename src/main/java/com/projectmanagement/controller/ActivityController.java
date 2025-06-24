@@ -34,7 +34,7 @@ public class ActivityController {
                 .body(activityService.createActivity(projectID, activityDTO));
     }
 
-    @PutMapping("/update/{activityId}")
+    @PatchMapping("/update/{activityId}")
     public ResponseEntity<ActivityDTO> updateActivity(
             @PathVariable Long activityId,
             @RequestBody ActivityDTO activityDTO) {

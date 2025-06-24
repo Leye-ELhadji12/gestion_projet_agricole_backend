@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/projects")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200/")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -30,7 +31,7 @@ public class ProjectController {
         return  ResponseEntity.ok(projectService.getAllProjects(page, size));
     }
 
-    @PutMapping("/update/{projectId}")
+    @PatchMapping("/update/{projectId}")
     public ResponseEntity<ProjectDTO> updateProject(
             @PathVariable Long projectId,
             @RequestBody ProjectDTO projectDTO) {
