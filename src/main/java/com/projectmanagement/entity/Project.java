@@ -22,6 +22,7 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
     private BigDecimal totalBudget;
+    @Enumerated(EnumType.STRING)
     private ProjectStatus status;
     @OneToMany(mappedBy = "project")
     private List<Activity> activities;

@@ -14,6 +14,7 @@ public class Document {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private DocumentType type;
     private Integer quantity;
     private String filePath;

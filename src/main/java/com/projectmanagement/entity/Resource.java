@@ -16,6 +16,7 @@ public class Resource {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private ResourceType type;
     private Double quantity;
     private String unit;

@@ -1,6 +1,5 @@
 package com.projectmanagement.dto;
 
-import com.projectmanagement.enums.ActivityStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -13,5 +12,6 @@ public class ActivityDTO {
     private LocalDate plannedStartDate;
     private LocalDate plannedEndDate;
     private LocalDate actualStartDate;
-    private ActivityStatus status;
+    private String priorite;
+    private String status;
 }

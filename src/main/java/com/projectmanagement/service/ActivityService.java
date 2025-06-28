@@ -3,6 +3,8 @@ package com.projectmanagement.service;
 import com.projectmanagement.dto.ActivityDTO;
 import com.projectmanagement.entity.Activity;
 import com.projectmanagement.entity.Project;
+import com.projectmanagement.enums.ActivityStatus;
+import com.projectmanagement.enums.Priorite;
 import com.projectmanagement.exception.ActivityNotFoundException;
 import com.projectmanagement.exception.ProjectNotFoundException;
 import com.projectmanagement.mapper.ActivityMapper;
@@ -49,7 +51,12 @@ public class ActivityService {
         existingActivity.setPlannedStartDate(activityDTO.getPlannedStartDate());
         existingActivity.setPlannedEndDate(activityDTO.getPlannedEndDate());
         existingActivity.setActualStartDate(activityDTO.getActualStartDate());
-        existingActivity.setStatus(activityDTO.getStatus());
+        if (activityDTO.getStatus() != null) {
+            existingActivity.setStatus(ActivityStatus.valueOf(activityDTO.getStatus()));
+        }
+        if (activityDTO.getPriorite() != null) {
+            existingActivity.setPriorite(Priorite.valueOf(activityDTO.getPriorite()));
+        }
         Activity updatedActivity = activityRepository.save(existingActivity);
         return activityMapper.toActivityDTO(updatedActivity);
     }

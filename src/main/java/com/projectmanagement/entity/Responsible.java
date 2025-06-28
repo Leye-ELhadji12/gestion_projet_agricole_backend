@@ -19,6 +19,7 @@ public class Responsible {
     private String firstname;
     private String lastname;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private String phone;
     @ManyToMany(mappedBy = "responsibles")

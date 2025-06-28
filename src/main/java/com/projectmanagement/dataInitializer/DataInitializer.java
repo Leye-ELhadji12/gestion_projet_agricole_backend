@@ -31,29 +31,37 @@ public class DataInitializer implements CommandLineRunner {
             responsibles.add(responsibleRepository.save(resp));
         }
 
+        // Get all enum values for diversification
+        ProjectStatus[] projectStatuses = ProjectStatus.values();
+        ActivityStatus[] activityStatuses = ActivityStatus.values();
+        Priorite[] priorites = Priorite.values();
+
         List<Project> projects = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 15; i++) { // Increased number of projects for more diversification
             Project project = new Project();
             project.setName("Project " + i);
             project.setDescription("Description of project " + i);
-            project.setStartDate(LocalDate.now());
-            project.setEndDate(LocalDate.now().plusMonths(6));
-            project.setTotalBudget(new BigDecimal("10000").multiply(BigDecimal.valueOf(i)));
-            project.setStatus(ProjectStatus.EN_COURS);
-            project.setResponsibles(responsibles.subList(0, i % 5));
+            project.setStartDate(LocalDate.now().minusDays(i * 5)); // Diversify start dates
+            project.setEndDate(LocalDate.now().plusMonths(6).plusDays(i * 10)); // Diversify end dates
+            project.setTotalBudget(new BigDecimal("10000").multiply(BigDecimal.valueOf(i)).add(new BigDecimal("5000")));
+            // Assign diverse ProjectStatus
+            project.setStatus(projectStatuses[(i - 1) % projectStatuses.length]);
+            project.setResponsibles(responsibles.subList(0, i % responsibles.size()));
             projects.add(projectRepository.save(project));
         }
 
         List<Activity> activities = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 30; i++) { // Increased number of activities for more diversification
             Activity act = new Activity();
             act.setTitle("Activity " + i);
             act.setDescription("Description of activity " + i);
-            act.setPlannedStartDate(LocalDate.now());
-            act.setPlannedEndDate(LocalDate.now().plusWeeks(i));
-            act.setActualStartDate(LocalDate.now());
-            act.setStatus(ActivityStatus.IN_PROGRESS);
-            act.setProject(projects.get(i - 1));
+            act.setPlannedStartDate(LocalDate.now().minusDays(i * 2)); // Diversify start dates
+            act.setPlannedEndDate(LocalDate.now().plusWeeks(i)); // Diversify end dates
+            act.setActualStartDate(LocalDate.now().minusDays(i * 2 - 5)); // Diversify actual start dates
+            // Assign diverse ActivityStatus and Priorite
+            act.setStatus(activityStatuses[(i - 1) % activityStatuses.length]);
+            act.setPriorite(priorites[(i - 1) % priorites.length]);
+            act.setProject(projects.get((i - 1) % projects.size())); // Assign to diverse projects
             activities.add(activityRepository.save(act));
         }
 
@@ -79,14 +87,14 @@ public class DataInitializer implements CommandLineRunner {
             resources.add(resourceRepository.save(rsc));
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < activities.size(); i++) { // Ensure Usage matches created activities
             Usage usage = new Usage();
             usage.setActivity(activities.get(i));
-            usage.setResource(resources.get(i));
+            usage.setResource(resources.get(i % resources.size())); // Cycle through resources
             usageRepository.save(usage);
         }
 
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= activities.size(); i++) { // Ensure Document matches created activities
             Document doc = new Document();
             doc.setName("Document" + i + ".pdf");
             doc.setType(DocumentType.CONTRACT);

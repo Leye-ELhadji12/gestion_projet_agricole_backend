@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.projectmanagement.enums.ActivityStatus;
+import com.projectmanagement.enums.Priorite;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +23,9 @@ public class Activity {
     private LocalDate plannedStartDate;
     private LocalDate plannedEndDate;
     private LocalDate actualStartDate;
+    @Enumerated(EnumType.STRING)
+    private Priorite priorite;
+    @Enumerated(EnumType.STRING)
     private ActivityStatus status;
     @ManyToOne
     private Project project;

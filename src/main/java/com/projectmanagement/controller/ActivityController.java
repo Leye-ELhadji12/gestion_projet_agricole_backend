@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/activities")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200/")
 public class ActivityController {
 
     private final ActivityService activityService;
