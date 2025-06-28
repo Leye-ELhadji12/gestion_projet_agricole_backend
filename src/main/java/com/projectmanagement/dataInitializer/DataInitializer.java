@@ -90,5 +90,7 @@ public class DataInitializer implements CommandLineRunner {
             usage.setResource(resources.get(i % resources.size()));
             usageRepository.save(usage);
         }
+
+
     }
 }
