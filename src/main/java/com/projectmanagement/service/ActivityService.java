@@ -13,6 +13,8 @@ import com.projectmanagement.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +40,15 @@ public class ActivityService {
     public Page<ActivityDTO> getActivities(Long projectID, Pageable pageable) {
         Project proj = projectRepository.findById(projectID)
                 .orElseThrow(() -> new ProjectNotFoundException("Project " + projectID + " not found"));
-        Page<Activity> activities = activityRepository.findByProject(proj, pageable);
+        Pageable sortedPageable = pageable;
+        if (pageable.getSort().isUnsorted()) {
+            sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "id")
+            );
+        }
+        Page<Activity> activities = activityRepository.findByProject(proj, sortedPageable);
         return activities.map(activityMapper::toActivityDTO);
     }
 

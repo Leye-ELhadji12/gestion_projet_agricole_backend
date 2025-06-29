@@ -3,16 +3,27 @@ package com.projectmanagement.mapper;
 import com.projectmanagement.dto.ProjectDTO;
 import com.projectmanagement.entity.Project;
 import com.projectmanagement.enums.ProjectStatus;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ProjectMapper {
+
+    private final ResponsibleMapper responsibleMapper;
 
     public Project toProject(ProjectDTO projectDTO) {
         Project project = new Project();
         BeanUtils.copyProperties(projectDTO, project);
         project.setStatus(ProjectStatus.valueOf(projectDTO.getStatus()));
+        if (projectDTO.getResponsibles() != null) {
+            project.setResponsibles(projectDTO.getResponsibles().stream()
+                .map(responsibleMapper::toResponsible)
+                .toList());
+        }
         return project;
     }
 
@@ -20,6 +31,11 @@ public class ProjectMapper {
         ProjectDTO projectDTO = new ProjectDTO();
         BeanUtils.copyProperties(project, projectDTO);
         projectDTO.setStatus(project.getStatus().name());
+        if (project.getResponsibles() != null) {
+            projectDTO.setResponsibles(project.getResponsibles().stream()
+                .map(responsibleMapper::toResponsibleDTO)
+                .toList());
+        }
         return projectDTO;
     }
 }

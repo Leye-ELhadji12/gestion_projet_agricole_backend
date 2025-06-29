@@ -91,6 +91,17 @@ public class DataInitializer implements CommandLineRunner {
             usageRepository.save(usage);
         }
 
-
+        for (int i = 1; i <= activities.size(); i++) {
+            Document doc = new Document();
+            doc.setName("Document" + i + ".pdf");
+            doc.setType(DocumentType.CONTRACT);
+            doc.setQuantity(i);
+            doc.setFilePath("sample/path/doc" + i + ".pdf");
+            doc.setContentType("application/pdf");
+            doc.setSize(10000L * i);
+            doc.setOriginalFileName("original-doc" + i + ".pdf");
+            doc.setActivity(activities.get(i - 1));
+            documentRepository.save(doc);
+        }
     }
 }

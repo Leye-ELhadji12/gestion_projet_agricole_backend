@@ -9,6 +9,7 @@ import com.projectmanagement.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,14 +24,15 @@ public class ProjectService {
     }
 
     public Page<ProjectDTO> getAllProjects(int page, int size) {
-        return projectRepository.findAll(PageRequest.of(page,size))
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+        return projectRepository.findAll(pageRequest)
                 .map(projectMapper::toProjectDTO);
     }
 
     public ProjectDTO getProjectById(Long id) {
-         Project project = projectRepository.findById(id)
+        Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Project not found : "+id));
-         return projectMapper.toProjectDTO(project);
+        return projectMapper.toProjectDTO(project);
     }
 
     public ProjectDTO updateProject(Long id, ProjectDTO projectDTO) {

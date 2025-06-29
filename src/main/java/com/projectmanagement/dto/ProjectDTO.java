@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class ProjectDTO {
@@ -14,4 +15,5 @@ public class ProjectDTO {
     private LocalDate endDate;
     private BigDecimal totalBudget;
     private String status;
+    private List<ResponsibleDTO> responsibles;
 }
