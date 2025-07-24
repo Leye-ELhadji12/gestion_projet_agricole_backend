@@ -47,11 +47,11 @@ public class ResponsibleService {
                   .orElseThrow(() -> new ResponsibleNotFoundException(
                         "Responsible with id " + id + " not found"));
             if (responsibleRepository.findByEmail(responsibleDTO.getEmail()) != null &&
-                !existingResponsible.getEmail().equals(responsibleDTO.getEmail())) {
+                  !existingResponsible.getEmail().equals(responsibleDTO.getEmail())) {
                   throw new IllegalArgumentException("Email already exists");
             }
             Responsible updatedResponsible = responsibleMapper.toResponsible(responsibleDTO);
-            updatedResponsible.setId(id); // Ensure the ID remains the same
+            updatedResponsible.setId(id);
             Responsible savedResponsible = responsibleRepository.save(updatedResponsible);
             return responsibleMapper.toResponsibleDTO(savedResponsible);
       }
