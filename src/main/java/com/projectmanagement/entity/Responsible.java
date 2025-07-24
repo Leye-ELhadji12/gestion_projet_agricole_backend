@@ -15,6 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Responsible {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
     private String email;
     private String firstname;
     private String lastname;

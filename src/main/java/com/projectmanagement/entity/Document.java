@@ -17,10 +17,11 @@ public class Document {
     @Enumerated(EnumType.STRING)
     private DocumentType type;
     private Integer quantity;
-    private String filePath;
-    private String contentType;
-    private Long size;
     private String originalFileName;
+    private Long fileSize;
+    private String fileType;
+    @Lob
+    private byte[] file;
     @ManyToOne
     private Activity activity;
 }

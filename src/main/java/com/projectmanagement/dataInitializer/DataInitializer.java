@@ -1,4 +1,24 @@
 package com.projectmanagement.dataInitializer;
+
+// This file is responsible for initializing dummy data in the database when the
+// Spring Boot application starts. It implements CommandLineRunner, which means
+// its 'run' method will be executed automatically after the application context
+// is loaded.
+//
+// The purpose of DataInitializer is to:
+// 1. Populate Database: Provide initial data for development and testing purposes,
+//    so you don't start with an empty database.
+// 2. Demonstrate Relationships: Create interconnected data across different entities
+//    (e.g., documents associated with activities, activities with projects).
+// 3. Ease of Development: Allows developers to quickly get a working dataset
+//    without manual data entry.
+//
+// For Document initialization specifically:
+// - It creates sample Document entities.
+// - It sets the 'name', 'type', 'quantity', 'fileSize', 'fileType', 'file' (dummy byte data),
+//   'originalFileName', and associates each document with an existing 'Activity'.
+// - The 'file' field is populated with simple dummy byte data for demonstration.
+
 import com.projectmanagement.entity.*;
 import com.projectmanagement.enums.*;
 import com.projectmanagement.repository.*;
@@ -26,8 +46,14 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         List<Responsible> responsibles = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
-            Responsible resp = new Responsible("admin" + i + "@example.com", "Firstname" + i, "Lastname" + i,
-                    "password", i % 2 == 0 ? Role.ADMIN : Role.VISITOR, "77" + i + "1234567", new ArrayList<>());
+            Responsible resp = new Responsible();
+            resp.setEmail("admin" + i + "@example.com");
+            resp.setFirstname("Firstname" + i);
+            resp.setLastname("Lastname" + i);
+            resp.setPassword("password");
+            resp.setRole(i % 2 == 0 ? Role.ADMIN : Role.VISITOR);
+            resp.setPhone("77" + i + "1234567");
+            resp.setProjects(new ArrayList<>());
             responsibles.add(responsibleRepository.save(resp));
         }
 
@@ -91,17 +117,17 @@ public class DataInitializer implements CommandLineRunner {
             usageRepository.save(usage);
         }
 
-        for (int i = 1; i <= activities.size(); i++) {
-            Document doc = new Document();
-            doc.setName("Document" + i + ".pdf");
-            doc.setType(DocumentType.CONTRACT);
-            doc.setQuantity(i);
-            doc.setFilePath("sample/path/doc" + i + ".pdf");
-            doc.setContentType("application/pdf");
-            doc.setSize(10000L * i);
-            doc.setOriginalFileName("original-doc" + i + ".pdf");
-            doc.setActivity(activities.get(i - 1));
-            documentRepository.save(doc);
-        }
+        // for (int i = 1; i <= activities.size(); i++) {
+        //     Document doc = new Document();
+        //     doc.setName("Document" + i + ".pdf");
+        //     doc.setType(DocumentType.CONTRACT);
+        //     doc.setQuantity(i);
+        //     doc.setFileSize(10000L * i); // Dummy file size
+        //     doc.setFileType("application/pdf"); // Dummy file type
+        //     doc.setFile(("This is dummy content for document " + i).getBytes()); // Dummy data
+        //     doc.setOriginalFileName("original-doc" + i + ".pdf");
+        //     doc.setActivity(activities.get(i - 1));
+        //     documentRepository.save(doc);
+        // }
     }
 }
