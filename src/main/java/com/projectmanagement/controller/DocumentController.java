@@ -38,31 +38,18 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/documents")
+@RequestMapping("/api/v1/documents")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200/")
 public class DocumentController {
 
     private final DocumentService documentService;
 
     @PostMapping("/upload")
     public ResponseEntity<DocumentDTO> uploadDocument(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("name") String name,
-            @RequestParam("type") String type,
-            @RequestParam("quantity") Integer quantity,
-            @RequestParam(value = "activityId", required = true) Long activityId) throws IOException {
-
-        DocumentDTO documentDTO = new DocumentDTO();
-        documentDTO.setName(name);
-        documentDTO.setType(com.projectmanagement.enums.DocumentType.valueOf(type));
-        documentDTO.setQuantity(quantity);
-        documentDTO.setOriginalFileName(file.getOriginalFilename());
-        documentDTO.setFileSize(file.getSize());
-        documentDTO.setFileType(file.getContentType());
-        documentDTO.setFile(file.getBytes());
-        documentDTO.setActivityId(activityId);
-
-        DocumentDTO savedDocument = documentService.saveDocument(documentDTO);
+        @RequestPart MultipartFile file,
+        @RequestPart DocumentDTO documentDTO) throws IOException {
+        DocumentDTO savedDocument = documentService.saveDocument(file, documentDTO);
         return new ResponseEntity<>(savedDocument, HttpStatus.CREATED);
     }
 
@@ -89,4 +76,4 @@ public class DocumentController {
         List<DocumentDTO> documents = documentService.getDocumentsByActivityId(activityId);
         return ResponseEntity.ok(documents);
     }
-} 
+}

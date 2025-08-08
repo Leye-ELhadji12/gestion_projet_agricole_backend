@@ -2,12 +2,12 @@ package com.projectmanagement.mapper;
 
 import com.projectmanagement.enums.Role;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.projectmanagement.dto.ResponsibleDTO;
 import com.projectmanagement.entity.Responsible;
 
-@Service
+@Component
 public class ResponsibleMapper {
 
       public Responsible toResponsible(ResponsibleDTO responsibleDTO) {

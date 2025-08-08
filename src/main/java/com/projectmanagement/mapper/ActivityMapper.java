@@ -6,9 +6,9 @@ import com.projectmanagement.enums.Priorite;
 import com.projectmanagement.enums.ActivityStatus;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ActivityMapper {
 
     public Activity toActivity(ActivityDTO activityDTO) {

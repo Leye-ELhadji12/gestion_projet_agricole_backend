@@ -7,9 +7,11 @@ import com.projectmanagement.enums.ProjectStatus;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+import java.util.HashSet;
+
+@Component
 @RequiredArgsConstructor
 public class ProjectMapper {
 
@@ -20,9 +22,9 @@ public class ProjectMapper {
         BeanUtils.copyProperties(projectDTO, project);
         project.setStatus(ProjectStatus.valueOf(projectDTO.getStatus()));
         if (projectDTO.getResponsibles() != null) {
-            project.setResponsibles(projectDTO.getResponsibles().stream()
+            project.setResponsibles(new HashSet<>(projectDTO.getResponsibles().stream()
                 .map(responsibleMapper::toResponsible)
-                .toList());
+                .toList()));
         }
         return project;
     }

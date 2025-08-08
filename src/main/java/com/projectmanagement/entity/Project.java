@@ -2,7 +2,9 @@ package com.projectmanagement.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.projectmanagement.enums.ProjectStatus;
 import jakarta.persistence.*;
@@ -30,9 +32,10 @@ public class Project {
     private List<Indicator> indicators;
     @ManyToMany
     @JoinTable(
-            name = "associate",
-            joinColumns = @JoinColumn(name = "project_Id"),
-            inverseJoinColumns = @JoinColumn(name = "responsible_Id")
+        name = "associate",
+        joinColumns = @JoinColumn(name = "project_Id"),
+        inverseJoinColumns = @JoinColumn(name = "responsible_Id")
     )
-    private List<Responsible> responsibles;
+    private Set<Responsible> responsibles = new HashSet<>();
+
 }

@@ -3,9 +3,9 @@ package com.projectmanagement.mapper;
 import com.projectmanagement.dto.IndicatorDTO;
 import com.projectmanagement.entity.Indicator;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class IndicatorMapper {
 
     public Indicator toIndicator(IndicatorDTO indicatorDTO) {

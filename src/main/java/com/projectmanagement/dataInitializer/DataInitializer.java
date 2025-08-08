@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Component
@@ -40,7 +41,6 @@ public class DataInitializer implements CommandLineRunner {
     private final IndicatorRepository indicatorRepository;
     private final ResourceRepository resourceRepository;
     private final UsageRepository usageRepository;
-    private final DocumentRepository documentRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -70,7 +70,7 @@ public class DataInitializer implements CommandLineRunner {
             project.setEndDate(LocalDate.now().plusMonths(6).plusDays(i * 10));
             project.setTotalBudget(new BigDecimal("10000").multiply(BigDecimal.valueOf(i)).add(new BigDecimal("5000")));
             project.setStatus(projectStatuses[(i - 1) % projectStatuses.length]);
-            project.setResponsibles(responsibles.subList(0, i % responsibles.size()));
+            project.setResponsibles(new HashSet<>(responsibles.subList(0, i % responsibles.size())));
             projects.add(projectRepository.save(project));
         }
 

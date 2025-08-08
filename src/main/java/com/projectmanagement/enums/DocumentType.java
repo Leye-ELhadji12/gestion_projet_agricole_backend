@@ -1,12 +1,12 @@
 package com.projectmanagement.enums;
 
 public enum DocumentType {
-    REPORT,
-    CONTRACT,
-    INVOICE,
-    LETTER,
-    SPECIFICATION,
-    PHOTO,
-    VIDEO,
-    OTHER
+    Report,
+    Contract,
+    Invoice,
+    Letter,
+    Specification,
+    Photo,
+    Video,
+    Autre
 }

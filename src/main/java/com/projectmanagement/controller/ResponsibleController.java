@@ -1,11 +1,17 @@
 package com.projectmanagement.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.projectmanagement.dto.ResponsibleDTO;
+import com.projectmanagement.entity.Project;
+import com.projectmanagement.mapper.ProjectMapper;
+import com.projectmanagement.mapper.ResponsibleMapper;
+import com.projectmanagement.service.ProjectService;
 import com.projectmanagement.service.ResponsibleService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 public class ResponsibleController {
 
       private final ResponsibleService responsibleService;
-
+      private final ProjectService projectService;
+      private final ResponsibleMapper responsibleMapper;
+      private final ProjectMapper projectMapper;
       @GetMapping
       public ResponseEntity<Page<ResponsibleDTO>> getAllResponsible(
             @RequestParam(defaultValue = "0") int page,
@@ -46,5 +54,16 @@ public class ResponsibleController {
       public ResponseEntity<Void> deleteResponsible(@PathVariable Long id) {
             responsibleService.deleteResponsible(id);
             return ResponseEntity.noContent().build();
+      }
+
+      @GetMapping("/{projectId}/responsibles")
+      public ResponseEntity<List<ResponsibleDTO>> getProjectResponsibles(
+            @PathVariable Long projectId) {
+            Project project = projectMapper.toProject(projectService.getProjectById(projectId));
+            return ResponseEntity.ok(
+                  project.getResponsibles().stream()
+                        .map(responsibleMapper::toResponsibleDTO)
+                        .toList()
+            );
       }
 }

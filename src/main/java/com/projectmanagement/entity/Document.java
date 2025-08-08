@@ -13,10 +13,8 @@ import lombok.NoArgsConstructor;
 public class Document {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
     @Enumerated(EnumType.STRING)
     private DocumentType type;
-    private Integer quantity;
     private String originalFileName;
     private Long fileSize;
     private String fileType;

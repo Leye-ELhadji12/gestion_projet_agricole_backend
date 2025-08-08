@@ -1,8 +1,13 @@
 package com.projectmanagement.controller;
 
 import com.projectmanagement.dto.ProjectDTO;
+import com.projectmanagement.dto.ResponsibleDTO;
 import com.projectmanagement.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.HashSet;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/projects")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -46,5 +51,27 @@ public class ProjectController {
     public ResponseEntity<ProjectDTO> deleteProject(@PathVariable Long projectId) {
         projectService.deleteProject(projectId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{projectId}/responsibles")
+    public ResponseEntity<ProjectDTO> addResponsiblesToProject(
+            @PathVariable Long projectId,
+            @RequestBody List<Long> responsibleIds) {
+        return ResponseEntity.ok(projectService.addResponsiblesToProject(projectId, new HashSet<>(responsibleIds)));
+    }
+
+    @DeleteMapping("/{projectId}/responsibles")
+    public ResponseEntity<ProjectDTO> removeResponsiblesFromProject(
+            @PathVariable Long projectId,
+            @RequestBody List<Long> responsibleIds) {
+        return ResponseEntity.ok(
+            projectService.removeResponsiblesFromProject(projectId, new HashSet<>(responsibleIds))
+        );
+    }
+
+    @GetMapping("/{projectId}/responsibles")
+    public ResponseEntity<List<ResponsibleDTO>> getProjectResponsibles(
+            @PathVariable Long projectId) {
+        return ResponseEntity.ok(projectService.getProjectResponsibles(projectId));
     }
 }
