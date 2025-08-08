@@ -27,17 +27,18 @@ public class DocumentService {
       private final DocumentMapper documentMapper;
       private final ActivityRepository activityRepository;
 
-      public DocumentDTO saveDocument(MultipartFile file, DocumentDTO documentDTO) throws IOException {
+      public DocumentDTO saveDocument(DocumentDTO documentDTO) throws IOException {
             Document document = documentMapper.toDocument(documentDTO);
             if (documentDTO.getActivityId() != null) {
                   Activity activity = activityRepository.findById(documentDTO.getActivityId())
                         .orElseThrow(() -> new ActivityNotFoundException("Activity not found with ID: " + documentDTO.getActivityId()));
                   document.setActivity(activity);
             }
-            documentDTO.setOriginalFileName(file.getOriginalFilename());
-            documentDTO.setFileSize(file.getSize());
-            documentDTO.setFileType(file.getContentType());
-            documentDTO.setFile(file.getBytes());
+
+            // documentDTO.setOriginalFileName(file.getOriginalFilename());
+            // documentDTO.setFileSize(file.getSize());
+            // documentDTO.setFileType(file.getContentType());
+            // documentDTO.setFile(file.getBytes());
             documentDTO.setType(documentDTO.getType());
             documentDTO.setActivityId(documentDTO.getActivityId());
             Document savedDocument = documentRepository.save(document);

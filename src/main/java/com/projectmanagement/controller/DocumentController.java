@@ -49,7 +49,11 @@ public class DocumentController {
     public ResponseEntity<DocumentDTO> uploadDocument(
         @RequestPart MultipartFile file,
         @RequestPart DocumentDTO documentDTO) throws IOException {
-        DocumentDTO savedDocument = documentService.saveDocument(file, documentDTO);
+            documentDTO.setOriginalFileName(file.getOriginalFilename());
+            documentDTO.setFileSize(file.getSize());
+            documentDTO.setFileType(file.getContentType());
+            documentDTO.setFile(file.getBytes());
+        DocumentDTO savedDocument = documentService.saveDocument(documentDTO);
         return new ResponseEntity<>(savedDocument, HttpStatus.CREATED);
     }
 
