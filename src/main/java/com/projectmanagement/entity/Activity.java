@@ -30,7 +30,7 @@ public class Activity {
     @ManyToOne
     private Project project;
     @OneToMany(mappedBy = "activity")
-    private List<Document> documents;
+    private List<Deliverable> deliverables;
     @OneToMany(mappedBy = "activity")
     private List<Usage> usages;
 }

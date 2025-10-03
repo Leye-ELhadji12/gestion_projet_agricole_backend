@@ -1,5 +1,7 @@
 package com.projectmanagement.controller;
 
+import com.projectmanagement.dto.DeliverableDTO;
+
 // This file defines the DocumentController, which acts as the entry point for
 // handling HTTP requests related to document management in your application.
 // It exposes RESTful API endpoints that clients (e.g., a frontend application)
@@ -24,8 +26,7 @@ package com.projectmanagement.controller;
 // @RequestMapping("/api/documents"): Specifies the base URL path for all endpoints
 //   in this controller.
 
-import com.projectmanagement.dto.DocumentDTO;
-import com.projectmanagement.service.DocumentService;
+import com.projectmanagement.service.DeliverableService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,29 +44,29 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200/")
 public class DocumentController {
 
-    private final DocumentService documentService;
+    private final DeliverableService documentService;
 
     @PostMapping("/upload")
-    public ResponseEntity<DocumentDTO> uploadDocument(
+    public ResponseEntity<DeliverableDTO> uploadDocument(
         @RequestPart MultipartFile file,
-        @RequestPart DocumentDTO documentDTO) throws IOException {
+        @RequestPart DeliverableDTO documentDTO) throws IOException {
             documentDTO.setOriginalFileName(file.getOriginalFilename());
             documentDTO.setFileSize(file.getSize());
             documentDTO.setFileType(file.getContentType());
             documentDTO.setFile(file.getBytes());
-        DocumentDTO savedDocument = documentService.saveDocument(documentDTO);
+        DeliverableDTO savedDocument = documentService.saveDocument(documentDTO);
         return new ResponseEntity<>(savedDocument, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentDTO> getDocumentById(@PathVariable Long id) {
-        DocumentDTO documentDTO = documentService.getDocumentById(id);
+    public ResponseEntity<DeliverableDTO> getDocumentById(@PathVariable Long id) {
+        DeliverableDTO documentDTO = documentService.getDocumentById(id);
         return ResponseEntity.ok(documentDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<DocumentDTO>> getAllDocuments() {
-        List<DocumentDTO> documents = documentService.getAllDocuments();
+    public ResponseEntity<List<DeliverableDTO>> getAllDocuments() {
+        List<DeliverableDTO> documents = documentService.getAllDocuments();
         return ResponseEntity.ok(documents);
     }
 
@@ -76,8 +77,8 @@ public class DocumentController {
     }
 
     @GetMapping("/activity/{activityId}")
-    public ResponseEntity<List<DocumentDTO>> getDocumentsByActivityId(@PathVariable Long activityId) {
-        List<DocumentDTO> documents = documentService.getDocumentsByActivityId(activityId);
+    public ResponseEntity<List<DeliverableDTO>> getDocumentsByActivityId(@PathVariable Long activityId) {
+        List<DeliverableDTO> documents = documentService.getDocumentsByActivityId(activityId);
         return ResponseEntity.ok(documents);
     }
 }

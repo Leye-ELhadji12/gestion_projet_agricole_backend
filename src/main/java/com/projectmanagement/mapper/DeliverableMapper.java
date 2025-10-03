@@ -1,14 +1,15 @@
 package com.projectmanagement.mapper;
 
-import com.projectmanagement.dto.DocumentDTO;
-import com.projectmanagement.entity.Document;
 import org.springframework.stereotype.Component;
 
-@Component
-public class DocumentMapper {
+import com.projectmanagement.dto.DeliverableDTO;
+import com.projectmanagement.entity.Deliverable;
 
-    public DocumentDTO toDocumentDTO(Document document) {
-        DocumentDTO dto = new DocumentDTO();
+@Component
+public class DeliverableMapper {
+
+    public DeliverableDTO toDocumentDTO(Deliverable document) {
+        DeliverableDTO dto = new DeliverableDTO();
         dto.setId(document.getId());
         dto.setType(document.getType());
         dto.setOriginalFileName(document.getOriginalFileName());
@@ -21,8 +22,8 @@ public class DocumentMapper {
         return dto;
     }
 
-    public Document toDocument(DocumentDTO documentDTO) {
-        Document entity = new Document();
+    public Deliverable toDocument(DeliverableDTO documentDTO) {
+        Deliverable entity = new Deliverable();
         entity.setType(documentDTO.getType());
         entity.setOriginalFileName(documentDTO.getOriginalFileName());
         entity.setFileSize(documentDTO.getFileSize());
