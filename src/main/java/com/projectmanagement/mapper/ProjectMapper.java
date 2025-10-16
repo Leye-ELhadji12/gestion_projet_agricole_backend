@@ -34,9 +34,9 @@ public class ProjectMapper {
         BeanUtils.copyProperties(project, projectDTO);
         projectDTO.setStatus(project.getStatus().name());
         if (project.getResponsibles() != null) {
-            projectDTO.setResponsibles(project.getResponsibles().stream()
+            projectDTO.setResponsibles(new HashSet<>(project.getResponsibles().stream()
                 .map(responsibleMapper::toResponsibleDTO)
-                .toList());
+                .toList()));
         }
         return projectDTO;
     }
